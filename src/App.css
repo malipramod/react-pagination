@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+}
+
+.Delete{
+  cursor: pointer;
+  color: red;
+}
+
+.Clone{
+  cursor: pointer;
+  color: blue;
+}
+
+.UpDown{
+  cursor: pointer;  
+}
+
+.Container{
+  display:flex;
+}
+
+.Fixed{
+  width: 50%;
+}
