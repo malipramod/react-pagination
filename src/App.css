@@ -23,3 +23,7 @@
 .Fixed{
   width: 50%;
 }
+
+.Active{
+  background-color: grey;
+}

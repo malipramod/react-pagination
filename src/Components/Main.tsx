@@ -72,7 +72,8 @@ export default class Main extends React.Component<OwnProps, OwnState>{
         this.setState({ pageSize: parseInt(pageSize) }, () => {
             const updatePages = Array.from({ length: Math.ceil(this.state.data.length / this.state.pageSize) }, (v, i) => i + 1);
             const updatedFilterData = this.state.data.slice((this.state.pageSize * (this.state.currentPage - 1)), (this.state.pageSize * (this.state.currentPage)));
-            this.setState({ pages: updatePages, filteredData: updatedFilterData });
+            const totalPages = Math.ceil(RuleData.data.length / this.state.pageSize);
+            this.setState({ pages: updatePages, filteredData: updatedFilterData, currentPage: 1, totalPages: totalPages, startIndex: 1, endIndex: 4 });
         });
     }
 
@@ -97,12 +98,12 @@ export default class Main extends React.Component<OwnProps, OwnState>{
 
     movePagesNext() {
         const { startIndex, endIndex } = this.state;
-        this.setState({ startIndex: startIndex + 2, endIndex: endIndex + 2 });
+        this.setState({ startIndex: startIndex + 3, endIndex: endIndex + 3 });
     }
 
     movePagePrev() {
         const { startIndex, endIndex } = this.state;
-        this.setState({ startIndex: startIndex - 2, endIndex: endIndex - 2 });
+        this.setState({ startIndex: startIndex - 3, endIndex: endIndex - 3 });
     }
 
     render() {
@@ -114,6 +115,7 @@ export default class Main extends React.Component<OwnProps, OwnState>{
                     totalRecords={this.state.data.length}
                     startIndex={this.state.startIndex}
                     endIndex={this.state.endIndex}
+                    currentPage={this.state.currentPage}
                     filterData={this.filterData}
                     remove={this.remove}
                     clone={this.clone}

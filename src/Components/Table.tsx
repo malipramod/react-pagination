@@ -9,6 +9,7 @@ interface TableProps {
     totalRecords: number;
     startIndex: number;
     endIndex: number;
+    currentPage: number;
     filterData: (pageNo: number) => void;
     remove: (id: string) => void;
     clone: (id: string) => void;
@@ -17,7 +18,7 @@ interface TableProps {
     movePagesNext: () => void;
     movePagesPrev: () => void;
 }
-const Table: React.SFC<TableProps> = ({ filteredData, pages, totalRecords, startIndex, endIndex, filterData, remove, clone, moveUpDown, changePageSize, movePagesNext, movePagesPrev }) => {
+const Table: React.SFC<TableProps> = ({ filteredData, pages, totalRecords, startIndex, endIndex, currentPage, filterData, remove, clone, moveUpDown, changePageSize, movePagesNext, movePagesPrev }) => {
     return (
         <div>
             <div className="Container">
@@ -33,12 +34,12 @@ const Table: React.SFC<TableProps> = ({ filteredData, pages, totalRecords, start
                 </div>
                 <div className="Fixed">
                     {startIndex < 2 ? null : <input type="button" value="Previous" onClick={() => movePagesPrev()} />}
-                    {pages.slice(0, 1).map(p => <input key={p} onClick={() => filterData(p)} type="button" value={p} />)}
+                    {pages.slice(0, 1).map(p => <input className={currentPage === 1 ? "Active" : ""} key={p} onClick={() => filterData(p)} type="button" value="First" />)}
                     ...
-                    {pages.slice(startIndex, endIndex).map(p => <input key={p} onClick={() => filterData(p)} type="button" value={p} />)}
+                    {pages.slice(startIndex, endIndex).map(p => <input className={currentPage === p ? "Active" : ""} key={p} onClick={() => filterData(p)} type="button" value={p} />)}
                     ....
                     {
-                        pages.slice(-1).map(p => <input key={p} onClick={() => filterData(p)} type="button" value={p} />)
+                        pages.slice(-1).map(p => <input className={currentPage === pages.length ? "Active" : ""} key={p} onClick={() => filterData(p)} type="button" value="Last" />)
                     }
                     {endIndex < pages.length ? <input type="button" value="Next" onClick={() => movePagesNext()} /> : null}
                 </div>
