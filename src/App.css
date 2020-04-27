@@ -2,28 +2,34 @@
   text-align: center;
 }
 
+
 .Delete{
   cursor: pointer;
   color: red;
 }
 
+/* Clone action style */
 .Clone{
   cursor: pointer;
   color: blue;
 }
 
+/* MoveUp/MoveDown action style */
 .UpDown{
   cursor: pointer;  
 }
 
+/* Main container for table style */
 .Container{
   display:flex;
 }
 
+/* Dividing 50-50 */
 .Fixed{
   width: 50%;
 }
 
+/* Current action page style */
 .Active{
   background-color: grey;
 }

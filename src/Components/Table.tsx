@@ -2,7 +2,22 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faClone, faChevronCircleUp, faChevronCircleDown } from "@fortawesome/free-solid-svg-icons";
 import '../App.css';
-
+/**
+ * Props for table component
+ * filteredData: data to be shown in table
+ * pages: Page numbers
+ * totalRecords: Total records in filteredData
+ * startIndex: Start index of pagination numbers
+ * endIndex: End index of pagination numbers
+ * currentPage: Current page number selected
+ * filterData(pageNo) : Shows data on provided page number
+ * remove(id): Removes element from page
+ * clone(id): Creates a copy of element
+ * moveUpDown(id,direction): Moves element up/down based on direction
+ * changePageSize(id): Changes page size (10,20,30,... elements per page)
+ * movePagesNext(): Moves to next page
+ * movePagesPrev(): Moves to previous page
+ */
 interface TableProps {
     filteredData: any;
     pages: Array<number>;
@@ -18,6 +33,10 @@ interface TableProps {
     movePagesNext: () => void;
     movePagesPrev: () => void;
 }
+/**
+ * Grid to display records in pagination manner with actions
+ * @param TableProps see #21 
+ */
 const Table: React.SFC<TableProps> = ({ filteredData, pages, totalRecords, startIndex, endIndex, currentPage, filterData, remove, clone, moveUpDown, changePageSize, movePagesNext, movePagesPrev }) => {
     return (
         <div>

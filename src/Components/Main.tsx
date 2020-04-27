@@ -1,9 +1,23 @@
 import React from 'react';
 import Table from './Table';
 import { RuleData } from '../data'
-
+/**
+ * Props for Main component
+ */
 interface OwnProps { }
-
+/**
+ * Local state for Main component
+ * data: Intial data load
+ * filteredData: Filtered Data
+ * currentPage: Current page number selected
+ * pageSize: Number of records per page
+ * totalPages: Total pages from 1 to n
+ * startPage: Starting page
+ * endPage: Last page
+ * pages: Page numbers
+ * startIndex: Start index of pagination numbers
+ * endIndex: End index of pagination numbers
+ */
 interface OwnState {
     data: any;
     filteredData: any,
@@ -17,6 +31,10 @@ interface OwnState {
     endIndex: number;
 }
 
+/**
+ * Main component contains pagination
+ * 
+ */
 export default class Main extends React.Component<OwnProps, OwnState>{
     constructor(props: any) {
         super(props);
@@ -41,6 +59,10 @@ export default class Main extends React.Component<OwnProps, OwnState>{
         this.movePagePrev = this.movePagePrev.bind(this);
     }
 
+    /**
+     * Filters data bases on page number 
+     * @param index Changes page number
+     */
     filterData(index: number) {
         this.setState({ currentPage: index }, () => {
             const updatedFilterData = this.state.data.slice((this.state.pageSize * (this.state.currentPage - 1)), (this.state.pageSize * (this.state.currentPage)));
@@ -48,6 +70,10 @@ export default class Main extends React.Component<OwnProps, OwnState>{
         });
     }
 
+    /**
+     * Removes element from data
+     * @param id Element to be removed from data
+     */
     remove(id: string) {
         const updatedData = this.state.data.filter((d: any) => d.id !== id);
         this.setState({ data: updatedData }, () => {
@@ -57,6 +83,10 @@ export default class Main extends React.Component<OwnProps, OwnState>{
         });
     }
 
+    /**
+     * Creates a copy for element
+     * @param id Element to be cloned
+     */
     clone(id: string) {
         const dataTobeCloned = this.state.data.filter((d: any) => d.id === id);
         const updatedCloneData = dataTobeCloned.map((dtc: any) => { return { ...dtc, id: Date.now().toString() } });
@@ -68,6 +98,10 @@ export default class Main extends React.Component<OwnProps, OwnState>{
         });
     }
 
+    /**
+     * Changes the current page size(number of records per page)
+     * @param pageSize Page size (i.e. 10,20,30...)
+     */
     changePageSize(pageSize: any) {
         this.setState({ pageSize: parseInt(pageSize) }, () => {
             const updatePages = Array.from({ length: Math.ceil(this.state.data.length / this.state.pageSize) }, (v, i) => i + 1);
@@ -77,6 +111,11 @@ export default class Main extends React.Component<OwnProps, OwnState>{
         });
     }
 
+    /**
+     * Moves an element in perticular direction
+     * @param id Element to be moved
+     * @param direction Direction(up/down) to be moved
+     */
     moveUpDown(id: string, direction: string) {
         const indexToBeMoveSource = this.state.data.findIndex((d: any) => d.id === id);
         const indexToBeMoveDestination = direction === "up" ? indexToBeMoveSource - 1 : indexToBeMoveSource + 1;
@@ -96,11 +135,17 @@ export default class Main extends React.Component<OwnProps, OwnState>{
         });
     }
 
+    /**
+     * Moves to next page in series
+     */
     movePagesNext() {
         const { startIndex, endIndex } = this.state;
         this.setState({ startIndex: startIndex + 3, endIndex: endIndex + 3 });
     }
 
+    /**
+     * Moves to previous page in series
+     */
     movePagePrev() {
         const { startIndex, endIndex } = this.state;
         this.setState({ startIndex: startIndex - 3, endIndex: endIndex - 3 });
